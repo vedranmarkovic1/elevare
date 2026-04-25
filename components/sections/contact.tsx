@@ -37,7 +37,7 @@ export function Contact() {
     if (result.success) {
       setIsSubmitted(true)
     } else {
-      setError("Doslo je do greske prilikom slanja. Molimo pokusajte ponovo.")
+      setError("An error occurred while sending. Please try again.")
     }
   }
 
@@ -83,7 +83,7 @@ export function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground">Location</h4>
-                  <p className="text-muted-foreground">123 Innovation Drive<br />Belgrade, Serbia 11000</p>
+                  <p className="text-muted-foreground">33, Milana Rakica St.<br />Belgrade, Serbia 11000</p>
                 </div>
               </div>
 
@@ -103,7 +103,7 @@ export function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground">Phone</h4>
-                  <p className="text-muted-foreground">+381 11 123 4567</p>
+                  <p className="text-muted-foreground">011 2412 682</p>
                 </div>
               </div>
             </div>
@@ -144,34 +144,34 @@ export function Contact() {
                   <form onSubmit={handleSubmit}>
                     <FieldGroup>
                       <Field>
-                        <FieldLabel htmlFor="name">Ime i prezime</FieldLabel>
+                        <FieldLabel htmlFor="name">Name and Surname</FieldLabel>
                         <Input
                           id="name"
                           name="name"
-                          placeholder="Vase ime"
+                          placeholder="Your name"
                           required
                           disabled={isLoading}
                           className="bg-secondary border-border"
                         />
                       </Field>
                       <Field>
-                        <FieldLabel htmlFor="email">Email adresa</FieldLabel>
+                        <FieldLabel htmlFor="email">Email Address</FieldLabel>
                         <Input
                           id="email"
                           name="email"
                           type="email"
-                          placeholder="vas@email.com"
+                          placeholder="your@email.com"
                           required
                           disabled={isLoading}
                           className="bg-secondary border-border"
                         />
                       </Field>
                       <Field>
-                        <FieldLabel htmlFor="message">Poruka</FieldLabel>
+                        <FieldLabel htmlFor="message">Message</FieldLabel>
                         <Textarea
                           id="message"
                           name="message"
-                          placeholder="Recite nam nesto o sebi i sta biste zeleli da saznate..."
+                          placeholder="Tell us about yourself and what you'd like to know..."
                           rows={5}
                           required
                           disabled={isLoading}
@@ -189,11 +189,11 @@ export function Contact() {
                         {isLoading ? (
                           <>
                             <Loader2 className="w-4 h-4 animate-spin" />
-                            Slanje...
+                            Sending...
                           </>
                         ) : (
                           <>
-                            Posalji prijavu
+                            Send Application
                             <Send className="w-4 h-4" />
                           </>
                         )}
