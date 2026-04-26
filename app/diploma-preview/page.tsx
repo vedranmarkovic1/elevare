@@ -44,6 +44,16 @@ export default function DiplomaPreviewPage() {
     <div className="min-h-screen bg-background">
       <style>{`
         @media print {
+          @page {
+            size: A4 landscape;
+            margin: 20mm;
+          }
+          body {
+            margin: 0;
+            padding: 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
           body * {
             visibility: hidden;
           }
@@ -56,7 +66,7 @@ export default function DiplomaPreviewPage() {
             top: 0;
             width: 100%;
             margin: 0;
-            padding: 0;
+            padding: 10mm;
             box-shadow: none !important;
           }
           #diploma-card.printing::after {
