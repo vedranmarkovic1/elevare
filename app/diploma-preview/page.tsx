@@ -46,39 +46,24 @@ export default function DiplomaPreviewPage() {
         @media print {
           @page {
             size: A4 landscape;
-            margin: 0;
+            margin: 15mm;
           }
-          body {
-            margin: 0;
-            padding: 0;
-            background: white !important;
+          body * {
+            visibility: hidden;
           }
-          header, main > *:not(#diploma-card-wrapper), .fixed, button, input, .mt-12 {
-            display: none !important;
-          }
-          main {
-            padding: 0 !important;
-            margin: 0 !important;
+          #diploma-card-wrapper, #diploma-card-wrapper * {
+            visibility: visible;
           }
           #diploma-card-wrapper {
-            display: block !important;
-            position: relative !important;
-            padding: 15mm !important;
-            background: white !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            margin: 0 !important;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            padding: 0;
           }
           #diploma-card {
-            width: 100% !important;
-            max-width: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
             box-shadow: none !important;
             transform: none !important;
-            position: relative !important;
-            left: auto !important;
-            top: auto !important;
           }
           #diploma-card.printing::after {
             content: "SPECIMEN";
