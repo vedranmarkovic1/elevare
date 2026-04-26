@@ -7,8 +7,6 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Download, ArrowLeft, Sparkles, Loader2 } from "lucide-react"
-import html2canvas from "html2canvas"
-import { jsPDF } from "jspdf"
 import "@fontsource/playfair-display/400.css"
 import "@fontsource/playfair-display/600.css"
 import "@fontsource/playfair-display/700.css"
@@ -23,70 +21,57 @@ export default function DiplomaPreviewPage() {
     day: "numeric",
   })
 
-  const handleDownloadPDF = async () => {
+  const handleDownloadPDF = () => {
     if (!diplomaRef.current) {
       console.log("[v0] diplomaRef is null")
       return
     }
     
     setIsDownloading(true)
-    console.log("[v0] Starting PDF generation...")
     
-    try {
-      console.log("[v0] Creating canvas...")
-      const canvas = await html2canvas(diplomaRef.current, {
-        scale: 2,
-        backgroundColor: "#fdfcf7",
-        allowTaint: true,
-        useCORS: false,
-      })
-      
-      console.log("[v0] Canvas created, dimensions:", canvas.width, canvas.height)
-      
-      const imgData = canvas.toDataURL("image/jpeg", 0.95)
-      console.log("[v0] Image data created")
-      
-      const pdf = new jsPDF({
-        orientation: "landscape",
-        unit: "mm",
-        format: "a4",
-      })
-      
-      const pdfWidth = pdf.internal.pageSize.getWidth()
-      const pdfHeight = pdf.internal.pageSize.getHeight()
-      const imgWidth = canvas.width
-      const imgHeight = canvas.height
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight)
-      const imgX = (pdfWidth - imgWidth * ratio) / 2
-      const imgY = (pdfHeight - imgHeight * ratio) / 2
-      
-      console.log("[v0] Adding image to PDF...")
-      pdf.addImage(imgData, "JPEG", imgX, imgY, imgWidth * ratio, imgHeight * ratio)
-      
-      // Add watermark
-      console.log("[v0] Adding watermark...")
-      pdf.setTextColor(200, 200, 200)
-      pdf.setFontSize(60)
-      const watermarkText = "SPECIMEN"
-      
-      pdf.text(watermarkText, pdfWidth / 2, pdfHeight / 2, {
-        align: "center",
-        angle: 45,
-      })
-      
-      console.log("[v0] Saving PDF...")
-      pdf.save(`Elevare_Diploma_${studentName.replace(/\s+/g, "_")}.pdf`)
-      console.log("[v0] PDF saved successfully!")
-    } catch (error) {
-      console.error("[v0] Error generating PDF:", error)
-      alert("Error generating PDF. Please try again.")
-    } finally {
+    // Add watermark class temporarily
+    diplomaRef.current.classList.add('printing')
+    
+    // Use browser's print functionality
+    setTimeout(() => {
+      window.print()
       setIsDownloading(false)
-    }
+      diplomaRef.current?.classList.remove('printing')
+    }, 500)
   }
 
   return (
     <div className="min-h-screen bg-background">
+      <style>{`
+        @media print {
+          body * {
+            visibility: hidden;
+          }
+          #diploma-card, #diploma-card * {
+            visibility: visible;
+          }
+          #diploma-card {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            box-shadow: none !important;
+          }
+          #diploma-card.printing::after {
+            content: "SPECIMEN";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 100px;
+            color: rgba(200, 200, 200, 0.3);
+            z-index: 1000;
+            pointer-events: none;
+          }
+        }
+      `}</style>
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4 py-4">
@@ -170,6 +155,7 @@ export default function DiplomaPreviewPage() {
             
             {/* Diploma Card */}
             <div 
+              id="diploma-card"
               ref={diplomaRef}
               className="relative bg-gradient-to-br from-[#fdfcf7] via-[#fffef9] to-[#f8f6f0] rounded-lg shadow-2xl p-8 md:p-12 lg:p-16 border-8 border-double border-primary/30 mx-auto max-w-3xl"
             >
