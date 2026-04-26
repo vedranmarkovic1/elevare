@@ -65,18 +65,16 @@ export default function DiplomaPreviewPage() {
       
       // Add SPECIMEN watermark diagonally
       console.log("[v0] Adding watermark...")
-      pdf.setTextColor(255, 0, 0)
-      pdf.setFontSize(100)
       
-      // Draw watermark text manually with rotation
       const watermarkText = "SPECIMEN"
       
       // Center of page
       const centerX = pdfWidth / 2
       const centerY = pdfHeight / 2
       
-      // Save current state and apply transparency via fill color with alpha
-      pdf.setTextColor(255, 100, 100)
+      // Draw watermarks with red color
+      pdf.setTextColor(200, 200, 200)
+      pdf.setFontSize(80)
       
       // Draw multiple watermarks
       pdf.text(watermarkText, centerX, centerY, {
@@ -204,7 +202,7 @@ export default function DiplomaPreviewPage() {
               <div className="border border-primary/20 p-6 md:p-10">
                 {/* Logo and School Name */}
                 <div className="flex flex-col items-center mb-8">
-                  <Image
+                  <img
                     src="/images/logo.png"
                     alt="Elevare International Academy"
                     width={80}
@@ -294,7 +292,7 @@ export default function DiplomaPreviewPage() {
                     >
                       Principal
                     </p>
-                    <p className="text-[#6b7280] text-sm">Dr. Sarah Mitchell</p>
+                    <p className="text-[#6b7280] text-sm">Dr. Vedran Markovic</p>
                   </div>
                   <div className="text-center">
                     <div className="border-b border-[#0a1628]/30 mb-2 h-12" />
@@ -304,7 +302,7 @@ export default function DiplomaPreviewPage() {
                     >
                       Academic Coordinator
                     </p>
-                    <p className="text-[#6b7280] text-sm">Prof. James Anderson</p>
+                    <p className="text-[#6b7280] text-sm">Prof. Veljko Stevanic</p>
                   </div>
                 </div>
 
@@ -314,7 +312,7 @@ export default function DiplomaPreviewPage() {
                     <div className="absolute inset-0 rounded-full border-4 border-primary/60 flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
                       <div className="text-center">
                         <div className="w-12 h-12 md:w-14 md:h-14 mx-auto mb-1">
-                          <Image
+                          <img
                             src="/images/logo.png"
                             alt="Official Seal"
                             width={56}
