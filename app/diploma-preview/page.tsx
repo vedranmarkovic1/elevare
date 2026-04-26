@@ -45,8 +45,12 @@ export default function DiplomaPreviewPage() {
       <style>{`
         @media print {
           @page {
-            size: A4 landscape;
-            margin: 15mm;
+            size: A4 portrait;
+            margin: 10mm;
+          }
+          body {
+            margin: 0;
+            padding: 0;
           }
           body * {
             visibility: hidden;
@@ -59,11 +63,18 @@ export default function DiplomaPreviewPage() {
             left: 0;
             top: 0;
             width: 100%;
+            height: 100%;
             padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
           }
           #diploma-card {
             box-shadow: none !important;
             transform: none !important;
+            max-width: 90% !important;
+            width: auto !important;
+            page-break-inside: avoid;
           }
           #diploma-card.printing::after {
             content: "SPECIMEN";
