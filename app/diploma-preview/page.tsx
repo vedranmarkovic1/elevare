@@ -52,15 +52,29 @@ export default function DiplomaPreviewPage() {
       
       pdf.addImage(imgData, "PNG", imgX, imgY, imgWidth * ratio, imgHeight * ratio)
       
-      // Add watermark
-      pdf.setTextColor(200, 200, 200)
-      pdf.setFontSize(40)
+      // Add SPECIMEN watermark diagonally across the entire page
+      pdf.setTextColor(255, 0, 0)
+      pdf.setFontSize(80)
       pdf.saveGraphicsState()
-      pdf.setGState(new pdf.GState({ opacity: 0.3 }))
+      pdf.setGState(new pdf.GState({ opacity: 0.25 }))
       
-      // Diagonal watermark text
-      const watermarkText = "NOT AN OFFICIAL DIPLOMA - PREVIEW ONLY"
+      // Multiple diagonal SPECIMEN watermarks
+      const watermarkText = "SPECIMEN"
+      
+      // Center watermark
       pdf.text(watermarkText, pdfWidth / 2, pdfHeight / 2, {
+        align: "center",
+        angle: 45,
+      })
+      
+      // Top-left watermark
+      pdf.text(watermarkText, pdfWidth / 4, pdfHeight / 3, {
+        align: "center",
+        angle: 45,
+      })
+      
+      // Bottom-right watermark
+      pdf.text(watermarkText, (pdfWidth * 3) / 4, (pdfHeight * 2) / 3, {
         align: "center",
         angle: 45,
       })
