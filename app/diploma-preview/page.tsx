@@ -46,28 +46,39 @@ export default function DiplomaPreviewPage() {
         @media print {
           @page {
             size: A4 landscape;
-            margin: 20mm;
+            margin: 0;
           }
           body {
             margin: 0;
             padding: 0;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
+            background: white !important;
           }
-          body * {
-            visibility: hidden;
+          header, main > *:not(#diploma-card-wrapper), .fixed, button, input, .mt-12 {
+            display: none !important;
           }
-          #diploma-card, #diploma-card * {
-            visibility: visible;
+          main {
+            padding: 0 !important;
+            margin: 0 !important;
+          }
+          #diploma-card-wrapper {
+            display: block !important;
+            position: relative !important;
+            padding: 15mm !important;
+            background: white !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
           }
           #diploma-card {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            margin: 0;
-            padding: 10mm;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
             box-shadow: none !important;
+            transform: none !important;
+            position: relative !important;
+            left: auto !important;
+            top: auto !important;
           }
           #diploma-card.printing::after {
             content: "SPECIMEN";
@@ -75,8 +86,8 @@ export default function DiplomaPreviewPage() {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 100px;
-            color: rgba(200, 200, 200, 0.3);
+            font-size: 80px;
+            color: rgba(200, 200, 200, 0.2);
             z-index: 1000;
             pointer-events: none;
           }
@@ -154,6 +165,7 @@ export default function DiplomaPreviewPage() {
           </motion.div>
 
           {/* Diploma */}
+          <div id="diploma-card-wrapper">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -307,6 +319,7 @@ export default function DiplomaPreviewPage() {
               </div>
             </div>
           </motion.div>
+          </div>
 
           {/* Download Button */}
           <motion.div

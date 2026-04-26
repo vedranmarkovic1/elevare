@@ -48,7 +48,7 @@ export function Navbar() {
               height={50}
               className="rounded-full"
             />
-            <span className="hidden sm:block text-lg font-semibold text-primary">Elevare</span>
+            <span className="hidden sm:block text-lg font-semibold text-primary"> Elevare International Academy</span>
           </Link>
 
           {/* Desktop Navigation */}
