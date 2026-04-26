@@ -24,18 +24,28 @@ export default function DiplomaPreviewPage() {
   })
 
   const handleDownloadPDF = async () => {
-    if (!diplomaRef.current) return
+    if (!diplomaRef.current) {
+      console.log("[v0] diplomaRef is null")
+      return
+    }
     
     setIsDownloading(true)
+    console.log("[v0] Starting PDF generation...")
     
     try {
+      console.log("[v0] Creating canvas...")
       const canvas = await html2canvas(diplomaRef.current, {
         scale: 2,
         useCORS: true,
         backgroundColor: "#fdfcf7",
+        logging: true,
       })
       
+      console.log("[v0] Canvas created, dimensions:", canvas.width, canvas.height)
+      
       const imgData = canvas.toDataURL("image/png")
+      console.log("[v0] Image data created")
+      
       const pdf = new jsPDF({
         orientation: "landscape",
         unit: "mm",
@@ -50,40 +60,47 @@ export default function DiplomaPreviewPage() {
       const imgX = (pdfWidth - imgWidth * ratio) / 2
       const imgY = (pdfHeight - imgHeight * ratio) / 2
       
+      console.log("[v0] Adding image to PDF...")
       pdf.addImage(imgData, "PNG", imgX, imgY, imgWidth * ratio, imgHeight * ratio)
       
-      // Add SPECIMEN watermark diagonally across the entire page
+      // Add SPECIMEN watermark diagonally
+      console.log("[v0] Adding watermark...")
       pdf.setTextColor(255, 0, 0)
-      pdf.setFontSize(80)
-      pdf.saveGraphicsState()
-      pdf.setGState(new pdf.GState({ opacity: 0.25 }))
+      pdf.setFontSize(100)
       
-      // Multiple diagonal SPECIMEN watermarks
+      // Draw watermark text manually with rotation
       const watermarkText = "SPECIMEN"
       
-      // Center watermark
-      pdf.text(watermarkText, pdfWidth / 2, pdfHeight / 2, {
+      // Center of page
+      const centerX = pdfWidth / 2
+      const centerY = pdfHeight / 2
+      
+      // Save current state and apply transparency via fill color with alpha
+      pdf.setTextColor(255, 100, 100)
+      
+      // Draw multiple watermarks
+      pdf.text(watermarkText, centerX, centerY, {
         align: "center",
         angle: 45,
       })
       
-      // Top-left watermark
-      pdf.text(watermarkText, pdfWidth / 4, pdfHeight / 3, {
+      pdf.setFontSize(60)
+      pdf.text(watermarkText, pdfWidth / 5, pdfHeight / 4, {
+        align: "center", 
+        angle: 45,
+      })
+      
+      pdf.text(watermarkText, (pdfWidth * 4) / 5, (pdfHeight * 3) / 4, {
         align: "center",
         angle: 45,
       })
       
-      // Bottom-right watermark
-      pdf.text(watermarkText, (pdfWidth * 3) / 4, (pdfHeight * 2) / 3, {
-        align: "center",
-        angle: 45,
-      })
-      
-      pdf.restoreGraphicsState()
-      
-      pdf.save(`Elevare_Diploma_Preview_${studentName.replace(/\s+/g, "_")}.pdf`)
+      console.log("[v0] Saving PDF...")
+      pdf.save(`Elevare_Diploma_${studentName.replace(/\s+/g, "_")}.pdf`)
+      console.log("[v0] PDF saved successfully!")
     } catch (error) {
-      console.error("Error generating PDF:", error)
+      console.error("[v0] Error generating PDF:", error)
+      alert("Error generating PDF. Please try again.")
     } finally {
       setIsDownloading(false)
     }
