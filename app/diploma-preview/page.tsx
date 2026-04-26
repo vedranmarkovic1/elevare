@@ -36,14 +36,14 @@ export default function DiplomaPreviewPage() {
       console.log("[v0] Creating canvas...")
       const canvas = await html2canvas(diplomaRef.current, {
         scale: 2,
-        useCORS: true,
         backgroundColor: "#fdfcf7",
-        logging: true,
+        allowTaint: true,
+        useCORS: false,
       })
       
       console.log("[v0] Canvas created, dimensions:", canvas.width, canvas.height)
       
-      const imgData = canvas.toDataURL("image/png")
+      const imgData = canvas.toDataURL("image/jpeg", 0.95)
       console.log("[v0] Image data created")
       
       const pdf = new jsPDF({
@@ -61,34 +61,15 @@ export default function DiplomaPreviewPage() {
       const imgY = (pdfHeight - imgHeight * ratio) / 2
       
       console.log("[v0] Adding image to PDF...")
-      pdf.addImage(imgData, "PNG", imgX, imgY, imgWidth * ratio, imgHeight * ratio)
+      pdf.addImage(imgData, "JPEG", imgX, imgY, imgWidth * ratio, imgHeight * ratio)
       
-      // Add SPECIMEN watermark diagonally
+      // Add watermark
       console.log("[v0] Adding watermark...")
-      
+      pdf.setTextColor(200, 200, 200)
+      pdf.setFontSize(60)
       const watermarkText = "SPECIMEN"
       
-      // Center of page
-      const centerX = pdfWidth / 2
-      const centerY = pdfHeight / 2
-      
-      // Draw watermarks with red color
-      pdf.setTextColor(200, 200, 200)
-      pdf.setFontSize(80)
-      
-      // Draw multiple watermarks
-      pdf.text(watermarkText, centerX, centerY, {
-        align: "center",
-        angle: 45,
-      })
-      
-      pdf.setFontSize(60)
-      pdf.text(watermarkText, pdfWidth / 5, pdfHeight / 4, {
-        align: "center", 
-        angle: 45,
-      })
-      
-      pdf.text(watermarkText, (pdfWidth * 4) / 5, (pdfHeight * 3) / 4, {
+      pdf.text(watermarkText, pdfWidth / 2, pdfHeight / 2, {
         align: "center",
         angle: 45,
       })
