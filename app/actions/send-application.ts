@@ -17,8 +17,8 @@ export async function sendApplication(data: ApplicationData) {
     console.log("Sending email with API key:", process.env.RESEND_API_KEY ? "Present" : "Missing")
 
     const result = await resend.emails.send({
-      from: "Elevare Academy <onboarding@resend.dev>",
-      to: "upoznajme2010@gmail.com",
+      from: "Elevare Academy <info@geexose.resend.app>",
+      to: "vedran.markovic825@ucionica.vigimnazija.edu.rs",
       subject: `New Application - ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
