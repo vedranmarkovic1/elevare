@@ -15,7 +15,7 @@ const navLinks = [
   { href: "#assessment", label: "Assessment" },
   { href: "#staff", label: "Staff" },
   { href: "/diploma-preview", label: "Diploma" },
-  { href: "/special-tab", label: "Special tab" },
+  { href: "/special-tab", label: "Special staff" },
   { href: "#contact", label: "Contact" },
 ]
 

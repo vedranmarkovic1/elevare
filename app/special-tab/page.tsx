@@ -15,12 +15,13 @@ export default function SpecialTabPage() {
 
           {/* Image */}
           <div className="flex justify-center mb-8">
-            <div className="relative w-full max-w-2xl aspect-square md:aspect-[4/3] rounded-lg overflow-hidden shadow-2xl">
+            <div className="relative w-full max-w-2xl rounded-lg overflow-hidden shadow-2xl">
               <Image
                 src="/images/djuknic.jpg"
                 alt="Dimitrije Đuknić"
-                fill
-                className="object-cover"
+                width={800}
+                height={600}
+                className="object-contain w-full h-auto"
               />
             </div>
           </div>
