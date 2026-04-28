@@ -14,6 +14,8 @@ export async function sendApplication(data: ApplicationData) {
   try {
     const { name, email, message } = data
 
+    console.log("Sending email with API key:", process.env.RESEND_API_KEY ? "Present" : "Missing")
+
     const result = await resend.emails.send({
       from: "Elevare Academy <onboarding@resend.dev>",
       to: "upoznajme2010@gmail.com",
@@ -52,12 +54,12 @@ export async function sendApplication(data: ApplicationData) {
 
     if (result.error) {
       console.error("Email error:", result.error)
-      return { success: false, error: "Failed to send email" }
+      return { success: false, error: result.error.message || "Failed to send email" }
     }
 
     return { success: true }
   } catch (error) {
     console.error("Server error:", error)
-    return { success: false, error: "Server error occurred" }
+    return { success: false, error: error instanceof Error ? error.message : "Server error occurred" }
   }
 }
