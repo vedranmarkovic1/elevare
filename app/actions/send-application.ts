@@ -2,7 +2,9 @@
 
 import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Hardcoded API key
+const RESEND_API_KEY = "re_cMA5LnNk_NzWFDqHjCWeMs9gZJD6uBcFe"
+const resend = new Resend(RESEND_API_KEY)
 
 interface ApplicationData {
   name: string
@@ -13,11 +15,6 @@ interface ApplicationData {
 export async function sendApplication(data: ApplicationData) {
   try {
     const { name, email, message } = data
-
-    const apiKey = process.env.RESEND_API_KEY || ""
-    console.log("[v0] API key length:", apiKey.length)
-    console.log("[v0] API key starts with re_:", apiKey.startsWith("re_"))
-    console.log("[v0] API key first 10 chars:", apiKey.substring(0, 10))
 
     const result = await resend.emails.send({
       from: "Elevare Academy <info@geexose.resend.app>",
