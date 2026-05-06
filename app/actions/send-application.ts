@@ -17,8 +17,8 @@ export async function sendApplication(data: ApplicationData) {
     const { name, email, message } = data
 
     const result = await resend.emails.send({
-      from: "Elevare Academy <info@geexose.resend.app>",
-      to: "vedran.markovic825@ucionica.vigimnazija.edu.rs",
+      from: "Elevare Academy <onboarding@resend.dev>",
+      to: "vedran.markovic67@gmail.com",
       subject: `New Application - ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
