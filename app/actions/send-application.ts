@@ -14,7 +14,10 @@ export async function sendApplication(data: ApplicationData) {
   try {
     const { name, email, message } = data
 
-    console.log("[v0] Sending email with API key:", process.env.RESEND_API_KEY ? "Present" : "Missing")
+    const apiKey = process.env.RESEND_API_KEY || ""
+    console.log("[v0] API key length:", apiKey.length)
+    console.log("[v0] API key starts with re_:", apiKey.startsWith("re_"))
+    console.log("[v0] API key first 10 chars:", apiKey.substring(0, 10))
 
     const result = await resend.emails.send({
       from: "Elevare Academy <info@geexose.resend.app>",
